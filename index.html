@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punjab Lecturer Commerce Mock Test (50 Marks)</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background-color: #f4f6f9; color: #333; }
+        .container { max-width: 900px; background: #fff; padding: 30px; margin: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #1a365d; margin-bottom: 5px; }
+        .sub-header { text-align: center; color: #4a5568; margin-bottom: 25px; font-weight: bold; }
+        .q-block { margin-bottom: 20px; padding: 15px 20px; border: 1px solid #e2e8f0; border-radius: 6px; background-color: #fafafa; }
+        .q-title { font-weight: 600; font-size: 16px; margin-bottom: 12px; color: #2d3748; }
+        .options label { display: block; margin: 8px 0; padding: 8px 12px; border-radius: 4px; background: #fff; border: 1px solid #cbd5e0; cursor: pointer; transition: 0.2s; }
+        .options label:hover { background-color: #edf2f7; }
+        .options input { margin-right: 10px; }
+        button.btn-submit { display: block; width: 100%; padding: 15px; background: #2b6cb0; color: white; font-size: 18px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 30px; }
+        button.btn-submit:hover { background: #2c5282; }
+        .btn-print { display: inline-block; padding: 10px 20px; background: #38a169; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 15px; }
+        .btn-print:hover { background: #2f855a; }
+        .result-correct { color: #276749; font-weight: bold; display: block; margin-top: 8px; }
+        .result-wrong { color: #9b2c2c; font-weight: bold; display: block; margin-top: 8px; }
+        #resultSummary { text-align: center; padding: 20px; border: 2px dashed #2b6cb0; border-radius: 8px; background: #ebf8ff; }
+        @media print {
+            button { display: none !important; }
+            .container { box-shadow: none; border: none; width: 100%; max-width: 100%; padding: 0; }
+            body { background: #fff; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Punjab Lecturer Commerce Practice Test</h1>
+    <div class="sub-header">Total Questions: 50 | Total Marks: 50 | Syllabus: Punjab Commerce Lecturer</div>
+    <hr style="border: 0; border-top: 1px solid #e2e8f0; margin-bottom: 25px;">
+    
+    <form id="quizForm">
+        <div id="questionsContainer"></div>
+        <button type="button" class="btn-submit" onclick="submitTest()">Submit Paper & View Results</button>
+    </form>
+
+    <div id="resultSummary" style="display:none; margin-top:40px;">
+        <h2>Test Performance Summary</h2>
+        <p id="scoreText" style="font-size:24px; font-weight:bold; color:#2b6cb0;"></p>
+        <button class="btn-print" onclick="window.print()">Print / Save Results as PDF</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    // Section 1: Accounting & Cost Management
+    { q: "1. Which Accounting Standard (AS) deals with Cash Flow Statements in India?", options: ["AS-1", "AS-3", "AS-10", "AS-20"], ans: 1 },
+    { q: "2. Receipts and Payments Account prepared by a Not-for-Profit Organization is a:", options: ["Nominal Account", "Real Account", "Personal Account", "Representative Personal Account"], ans: 1 },
+    { q: "3. In the absence of a partnership deed, interest on a partner's loan is allowed at:", options: ["6% per annum simple interest", "12% per annum", "8% per annum", "No interest is allowed"], ans: 0 },
+    { q: "4. Quick Ratio (Acid-Test Ratio) excludes which of the following from current assets?", options: ["Trade Receivables", "Cash in Hand", "Inventories/Stock", "Short-term Investments"], ans: 2 },
+    { q: "5. Break-Even Point (in units) is calculated as:", options: ["Fixed Cost ÷ Contribution per unit", "Total Cost ÷ Sales per unit", "Variable Cost ÷ Contribution per unit", "Fixed Cost ÷ Profit Volume Ratio"], ans: 0 },
+    { q: "6. Which financial statement represents the financial position of a business at a specific point in time?", options: ["Profit & Loss Account", "Cash Flow Statement", "Balance Sheet", "Receipts and Payments Account"], ans: 2 },
+    { q: "7. Forfeited shares can be re-issued at a discount, but the discount cannot exceed:", options: ["10% of nominal value", "Amount credited to Share Forfeiture Account", "20% of face value", "Capital Reserve balance"], ans: 1 },
+    { q: "8. A company is considered a subsidiary of a holding company if the holding company controls more than what percentage of voting power?", options: ["25%", "50%", "75%", "90%"], ans: 1 },
+    { q: "9. Standard costing primarily deals with:", options: ["Calculation of actual historical costs", "Variance analysis between standard and actual performance", "Preparation of cash budget", "Tax liabilities estimation"], ans: 1 },
+    { q: "10. Under the Hire Purchase system, ownership of goods transfers to the buyer:", options: ["On signing the agreement", "On payment of first installment", "On payment of the last installment", "At the middle of the contract term"], ans: 2 },
+
+    // Section 2: Business Studies & Management
+    { q: "11. According to Henri Fayol, 'Unity of Command' implies that an employee should receive orders from:", options: ["Only one superior", "Multiple departmental heads", "Board of Directors directly", "Peers and subordinates"], ans: 0 },
+    { q: "12. Consumer Protection Act 2019 replaced which former legislation?", options: ["Consumer Protection Act 1986", "Consumer Protection Act 1991", "Monopolies Act 1969", "Sale of Goods Act 1930"], ans: 0 },
+    { q: "13. Under CPA 2019, District Consumer Disputes Redressal Commission can entertain complaints where value of goods/services does not exceed:", options: ["₹20 Lakhs", "₹50 Lakhs", "₹1 Crore", "₹10 Crores"], ans: 2 },
+    { q: "14. Which form of business structure enjoys a separate legal entity status and limited liability?", options: ["Sole Proprietorship", "Joint Hindu Family Business", "Joint Stock Company", "General Partnership"], ans: 2 },
+    { q: "15. The process of converting plain text into unreadable code to secure business transactions online is known as:", options: ["Digitalization", "Encryption", "E-filing", "Outsourcing"], ans: 1 },
+    { q: "16. Which functions of management involve monitoring performance and taking corrective action?", options: ["Planning", "Directing", "Controlling", "Organizing"], ans: 2 },
+    { q: "17. Which component of the Marketing Mix deals with distribution activities?", options: ["Product", "Price", "Place / Physical Distribution", "Promotion"], ans: 2 },
+    { q: "18. The social responsibility of business towards consumers includes providing:", options: ["Fair return on capital", "Safe and quality products at reasonable prices", "Timely payment of taxes", "Job security and fair wages"], ans: 1 },
+    { q: "19. Demonetisation in India was officially announced on which date?", options: ["15th August 2015", "8th November 2016", "1st July 2017", "31st March 2018"], ans: 1 },
+    { q: "20. Which service sector business involves insuring against loss of goods during sea transit?", options: ["Fire Insurance", "Life Insurance", "Marine Insurance", "Health Insurance"], ans: 2 },
+
+    // Section 3: Statistics & Mathematical Tools
+    { q: "21. Which measure of central tendency is most affected by extreme values?", options: ["Median", "Mode", "Arithmetic Mean", "Geometric Mean"], ans: 2 },
+    { q: "22. Standard Deviation is defined as the square root of:", options: ["Mean Deviation", "Variance", "Range", "Quartile Deviation"], ans: 1 },
+    { q: "23. The Coefficient of Variation (CV) is calculated using which formula?", options: ["(Standard Deviation / Mean) × 100", "(Mean / Standard Deviation) × 100", "(Variance / Mean) × 100", "(Range / Mean) × 100"], ans: 0 },
+    { q: "24. Laspeyres' Index Number uses weights from which period?", options: ["Base period", "Current period", "Average of base and current period", "Arbitrary selection"], ans: 0 },
+    { q: "25. The coefficient of correlation (r) between two variables always lies in the range:", options: ["0 to +1", "-1 to +1", "-∞ to +∞", "0 to +100"], ans: 1 },
+    { q: "26. Which small sample test is used to compare the means of two independent small samples (n < 30)?", options: ["Chi-Square Test", "Student's t-test", "F-test", "Z-test"], ans: 1 },
+    { q: "27. The slope of a straight line equation y = mx + c is represented by:", options: ["y", "x", "m", "c"], ans: 2 },
+    { q: "28. Consumer Price Index (CPI) measures changes in price level paid by:", options: ["Wholesale traders", "Ultimate consumers", "Manufacturing industries", "Exporters"], ans: 1 },
+    { q: "29. Which test is used to check the goodness of fit in statistical hypotheses?", options: ["Chi-Square Test", "t-test", "Correlation test", "Regression test"], ans: 0 },
+    { q: "30. When shifting the base year for index numbers, the new base index is set to:", options: ["0", "100", "50", "10"], ans: 1 },
+
+    // Section 4: Money, Banking & Government Budget
+    { q: "31. Primary Deficit in the Government Budget equals:", options: ["Fiscal Deficit minus Interest Payments", "Revenue Deficit minus Capital Expenditure", "Fiscal Deficit plus Revenue Deficit", "Total Expenditure minus Total Revenue"], ans: 0 },
+    { q: "32. High-Powered Money (M0) issued by the Central Bank includes:", options: ["Currency with public + Cash reserves of banks", "Demand deposits + Time deposits", "Net demand deposits only", "Government bonds only"], ans: 0 },
+    { q: "33. Central Bank acts as a 'Lender of Last Resort' to:", options: ["General Public", "Foreign Investors", "Commercial Banks", "Private Corporations"], ans: 2 },
+    { q: "34. Digital currency issued directly by the Reserve Bank of India (RBI) is known as:", options: ["Bitcoin", "Central Bank Digital Currency (CBDC / e-Rupee)", "Ethereum", "NEFT"], ans: 1 },
+    { q: "35. Disinvestment proceeds received by the government from selling PSU shares are classified as:", options: ["Revenue Receipt", "Capital Receipt", "Revenue Expenditure", "Capital Expenditure"], ans: 1 },
+    { q: "36. Which of the following is a quantitative credit control tool of the Central Bank?", options: ["Margin Requirements", "Moral Suasion", "Repo Rate / Bank Rate", "Direct Action"], ans: 2 },
+    { q: "37. Fiscal Deficit indicates:", options: ["Total borrowing requirements of the government", "Revenue shortfall only", "Excess of capital revenue over capital expenditure", "Surplus in balance of payments"], ans: 0 },
+    { q: "38. Under classification of government expenditure, spending on defense and administration is generally treated as:", options: ["Revenue Expenditure", "Capital Receipts", "Development Expenditure", "Primary Surplus"], ans: 0 },
+    { q: "39. Money creation capacity of commercial banks depends primarily on:", options: ["Legal Reserve Ratio (LRR) and Primary Deposits", "Direct government loans", "Foreign direct investment", "Stock exchange turnover"], ans: 0 },
+    { q: "40. NEFT and RTGS are types of:", options: ["Paper currency instruments", "Electronic Funds Transfer systems", "Stock market orders", "Tax filing systems"], ans: 1 },
+
+    // Section 5: Advanced Topics & Applied Commerce
+    { q: "41. Schedule III (formerly Schedule VI) of the Companies Act sets the prescribed format for:", options: ["Partnership Deed", "Balance Sheet & Statement of Profit & Loss of a Company", "Audit Report", "Revaluation Account"], ans: 1 },
+    { q: "42. Operating Leverage measures the responsiveness of Operating Profit (EBIT) to changes in:", options: ["Sales Volume", "Interest Rates", "Dividend Rate", "Tax Rate"], ans: 0 },
+    { q: "43. Which statement shows the inflows and outflows of Cash and Cash Equivalents during a period?", options: ["Funds Flow Statement", "Cash Flow Statement", "Comparative Income Statement", "Common-Size Statement"], ans: 1 },
+    { q: "44. In Consignment accounting, goods sent on consignment are owned by:", options: ["Consignee", "Consignor", "Transport Carrier", "Bank"], ans: 1 },
+    { q: "45. Which dividend theory considers dividend policy to be irrelevant to the valuation of a firm?", options: ["Walter's Model", "Gordon's Model", "Modigliani-Miller (MM) Hypothesis", "Traditional Theory"], ans: 2 },
+    { q: "46. Joint Venture accounting is essentially a:", options: ["Permanent partnership", "Temporary partnership for a specific venture", "Foreign Multinational Company", "Non-profit enterprise"], ans: 1 },
+    { q: "47. Net Working Capital is defined as:", options: ["Total Assets - Total Liabilities", "Current Assets - Current Liabilities", "Fixed Assets - Current Assets", "Equity Capital - Preference Capital"], ans: 1 },
+    { q: "48. An agreement between two or more firms to combine into a completely new corporate entity is called:", options: ["Absorption", "Reconstruction", "Amalgamation", "Holding Company"], ans: 2 },
+    { q: "49. Responsibility Accounting divides an organization into Responsibility Centers, which include:", options: ["Cost Centers, Profit Centers, and Investment Centers", "Shareholder Centers only", "Tax Centers and Legal Centers", "External Audit Centers"], ans: 0 },
+    { q: "50. Which index number formula satisfies both Time Reversal and Factor Reversal tests?", options: ["Laspeyres' Index", "Paasche's Index", "Fisher's Ideal Index", "Bowley's Index"], ans: 2 }
+];
+
+function loadQuestions() {
+    const container = document.getElementById('questionsContainer');
+    quizData.forEach((qObj, qIndex) => {
+        const div = document.createElement('div');
+        div.className = 'q-block';
+        let html = `<div class="q-title">${qObj.q}</div><div class="options">`;
+        qObj.options.forEach((opt, oIndex) => {
+            html += `<label><input type="radio" name="q${qIndex}" value="${oIndex}"> ${opt}</label>`;
+        });
+        html += `</div><div id="feedback${qIndex}"></div>`;
+        div.innerHTML = html;
+        container.appendChild(div);
+    });
+}
+
+function submitTest() {
+    let score = 0;
+    quizData.forEach((qObj, qIndex) => {
+        const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+        const feedback = document.getElementById(`feedback${qIndex}`);
+        if (selected) {
+            const val = parseInt(selected.value);
+            if (val === qObj.ans) {
+                score++;
+                feedback.innerHTML = `<span class="result-correct">✓ Correct! Selected: ${qObj.options[val]}</span>`;
+            } else {
+                feedback.innerHTML = `<span class="result-wrong">✗ Incorrect. Selected: ${qObj.options[val]} | Correct Answer: ${qObj.options[qObj.ans]}</span>`;
+            }
+        } else {
+            feedback.innerHTML = `<span class="result-wrong">✗ Not Answered | Correct Answer: ${qObj.options[qObj.ans]}</span>`;
+        }
+    });
+
+    const summary = document.getElementById('resultSummary');
+    summary.style.display = 'block';
+    document.getElementById('scoreText').innerText = `Your Final Score: ${score} / ${quizData.length}`;
+    summary.scrollIntoView({ behavior: 'smooth' });
+}
+
+window.onload = loadQuestions;
+</script>
+</body>
+</html>
