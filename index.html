@@ -9,31 +9,33 @@
         .container { max-width: 900px; background: #fff; padding: 30px; margin: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         h1 { text-align: center; color: #1a365d; margin-bottom: 5px; }
         .sub-header { text-align: center; color: #4a5568; margin-bottom: 25px; font-weight: bold; }
+        .user-info { background: #e2e8f0; padding: 15px; border-radius: 6px; margin-bottom: 20px; }
+        .user-info label { font-weight: bold; margin-right: 10px; }
+        .user-info input { padding: 8px; width: 250px; border-radius: 4px; border: 1px solid #cbd5e0; font-size: 14px; }
         .q-block { margin-bottom: 20px; padding: 15px 20px; border: 1px solid #e2e8f0; border-radius: 6px; background-color: #fafafa; }
         .q-title { font-weight: 600; font-size: 16px; margin-bottom: 12px; color: #2d3748; }
-        .options label { display: block; margin: 8px 0; padding: 8px 12px; border-radius: 4px; background: #fff; border: 1px solid #cbd5e0; cursor: pointer; transition: 0.2s; }
+        .options label { display: block; margin: 8px 0; padding: 8px 12px; border-radius: 4px; background: #fff; border: 1px solid #cbd5e0; cursor: pointer; }
         .options label:hover { background-color: #edf2f7; }
         .options input { margin-right: 10px; }
         button.btn-submit { display: block; width: 100%; padding: 15px; background: #2b6cb0; color: white; font-size: 18px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 30px; }
         button.btn-submit:hover { background: #2c5282; }
         .btn-print { display: inline-block; padding: 10px 20px; background: #38a169; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 15px; }
-        .btn-print:hover { background: #2f855a; }
         .result-correct { color: #276749; font-weight: bold; display: block; margin-top: 8px; }
         .result-wrong { color: #9b2c2c; font-weight: bold; display: block; margin-top: 8px; }
         #resultSummary { text-align: center; padding: 20px; border: 2px dashed #2b6cb0; border-radius: 8px; background: #ebf8ff; }
-        @media print {
-            button { display: none !important; }
-            .container { box-shadow: none; border: none; width: 100%; max-width: 100%; padding: 0; }
-            body { background: #fff; margin: 0; }
-        }
+        @media print { button, .user-info { display: none !important; } .container { box-shadow: none; border: none; width: 100%; padding: 0; } body { background: #fff; margin: 0; } }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>Punjab Lecturer Commerce Practice Test</h1>
     <div class="sub-header">Total Questions: 50 | Total Marks: 50 | Syllabus: Punjab Commerce Lecturer</div>
-    <hr style="border: 0; border-top: 1px solid #e2e8f0; margin-bottom: 25px;">
     
+    <div class="user-info">
+        <label for="candidateName">Candidate Name / Roll No:</label>
+        <input type="text" id="candidateName" placeholder="Enter your full name" required>
+    </div>
+
     <form id="quizForm">
         <div id="questionsContainer"></div>
         <button type="button" class="btn-submit" onclick="submitTest()">Submit Paper & View Results</button>
@@ -47,8 +49,10 @@
 </div>
 
 <script>
+// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+const GOOGLE_SHEET_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
 const quizData = [
-    // Section 1: Accounting & Cost Management
     { q: "1. Which Accounting Standard (AS) deals with Cash Flow Statements in India?", options: ["AS-1", "AS-3", "AS-10", "AS-20"], ans: 1 },
     { q: "2. Receipts and Payments Account prepared by a Not-for-Profit Organization is a:", options: ["Nominal Account", "Real Account", "Personal Account", "Representative Personal Account"], ans: 1 },
     { q: "3. In the absence of a partnership deed, interest on a partner's loan is allowed at:", options: ["6% per annum simple interest", "12% per annum", "8% per annum", "No interest is allowed"], ans: 0 },
@@ -59,8 +63,6 @@ const quizData = [
     { q: "8. A company is considered a subsidiary of a holding company if the holding company controls more than what percentage of voting power?", options: ["25%", "50%", "75%", "90%"], ans: 1 },
     { q: "9. Standard costing primarily deals with:", options: ["Calculation of actual historical costs", "Variance analysis between standard and actual performance", "Preparation of cash budget", "Tax liabilities estimation"], ans: 1 },
     { q: "10. Under the Hire Purchase system, ownership of goods transfers to the buyer:", options: ["On signing the agreement", "On payment of first installment", "On payment of the last installment", "At the middle of the contract term"], ans: 2 },
-
-    // Section 2: Business Studies & Management
     { q: "11. According to Henri Fayol, 'Unity of Command' implies that an employee should receive orders from:", options: ["Only one superior", "Multiple departmental heads", "Board of Directors directly", "Peers and subordinates"], ans: 0 },
     { q: "12. Consumer Protection Act 2019 replaced which former legislation?", options: ["Consumer Protection Act 1986", "Consumer Protection Act 1991", "Monopolies Act 1969", "Sale of Goods Act 1930"], ans: 0 },
     { q: "13. Under CPA 2019, District Consumer Disputes Redressal Commission can entertain complaints where value of goods/services does not exceed:", options: ["₹20 Lakhs", "₹50 Lakhs", "₹1 Crore", "₹10 Crores"], ans: 2 },
@@ -71,8 +73,6 @@ const quizData = [
     { q: "18. The social responsibility of business towards consumers includes providing:", options: ["Fair return on capital", "Safe and quality products at reasonable prices", "Timely payment of taxes", "Job security and fair wages"], ans: 1 },
     { q: "19. Demonetisation in India was officially announced on which date?", options: ["15th August 2015", "8th November 2016", "1st July 2017", "31st March 2018"], ans: 1 },
     { q: "20. Which service sector business involves insuring against loss of goods during sea transit?", options: ["Fire Insurance", "Life Insurance", "Marine Insurance", "Health Insurance"], ans: 2 },
-
-    // Section 3: Statistics & Mathematical Tools
     { q: "21. Which measure of central tendency is most affected by extreme values?", options: ["Median", "Mode", "Arithmetic Mean", "Geometric Mean"], ans: 2 },
     { q: "22. Standard Deviation is defined as the square root of:", options: ["Mean Deviation", "Variance", "Range", "Quartile Deviation"], ans: 1 },
     { q: "23. The Coefficient of Variation (CV) is calculated using which formula?", options: ["(Standard Deviation / Mean) × 100", "(Mean / Standard Deviation) × 100", "(Variance / Mean) × 100", "(Range / Mean) × 100"], ans: 0 },
@@ -83,8 +83,6 @@ const quizData = [
     { q: "28. Consumer Price Index (CPI) measures changes in price level paid by:", options: ["Wholesale traders", "Ultimate consumers", "Manufacturing industries", "Exporters"], ans: 1 },
     { q: "29. Which test is used to check the goodness of fit in statistical hypotheses?", options: ["Chi-Square Test", "t-test", "Correlation test", "Regression test"], ans: 0 },
     { q: "30. When shifting the base year for index numbers, the new base index is set to:", options: ["0", "100", "50", "10"], ans: 1 },
-
-    // Section 4: Money, Banking & Government Budget
     { q: "31. Primary Deficit in the Government Budget equals:", options: ["Fiscal Deficit minus Interest Payments", "Revenue Deficit minus Capital Expenditure", "Fiscal Deficit plus Revenue Deficit", "Total Expenditure minus Total Revenue"], ans: 0 },
     { q: "32. High-Powered Money (M0) issued by the Central Bank includes:", options: ["Currency with public + Cash reserves of banks", "Demand deposits + Time deposits", "Net demand deposits only", "Government bonds only"], ans: 0 },
     { q: "33. Central Bank acts as a 'Lender of Last Resort' to:", options: ["General Public", "Foreign Investors", "Commercial Banks", "Private Corporations"], ans: 2 },
@@ -95,8 +93,6 @@ const quizData = [
     { q: "38. Under classification of government expenditure, spending on defense and administration is generally treated as:", options: ["Revenue Expenditure", "Capital Receipts", "Development Expenditure", "Primary Surplus"], ans: 0 },
     { q: "39. Money creation capacity of commercial banks depends primarily on:", options: ["Legal Reserve Ratio (LRR) and Primary Deposits", "Direct government loans", "Foreign direct investment", "Stock exchange turnover"], ans: 0 },
     { q: "40. NEFT and RTGS are types of:", options: ["Paper currency instruments", "Electronic Funds Transfer systems", "Stock market orders", "Tax filing systems"], ans: 1 },
-
-    // Section 5: Advanced Topics & Applied Commerce
     { q: "41. Schedule III (formerly Schedule VI) of the Companies Act sets the prescribed format for:", options: ["Partnership Deed", "Balance Sheet & Statement of Profit & Loss of a Company", "Audit Report", "Revaluation Account"], ans: 1 },
     { q: "42. Operating Leverage measures the responsiveness of Operating Profit (EBIT) to changes in:", options: ["Sales Volume", "Interest Rates", "Dividend Rate", "Tax Rate"], ans: 0 },
     { q: "43. Which statement shows the inflows and outflows of Cash and Cash Equivalents during a period?", options: ["Funds Flow Statement", "Cash Flow Statement", "Comparative Income Statement", "Common-Size Statement"], ans: 1 },
@@ -125,6 +121,12 @@ function loadQuestions() {
 }
 
 function submitTest() {
+    const candidateName = document.getElementById('candidateName').value.trim();
+    if (!candidateName) {
+        alert("Please enter your Name before submitting the test.");
+        return;
+    }
+
     let score = 0;
     quizData.forEach((qObj, qIndex) => {
         const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
@@ -144,8 +146,25 @@ function submitTest() {
 
     const summary = document.getElementById('resultSummary');
     summary.style.display = 'block';
-    document.getElementById('scoreText').innerText = `Your Final Score: ${score} / ${quizData.length}`;
+    document.getElementById('scoreText').innerText = `Candidate: ${candidateName} | Score: ${score} / ${quizData.length}`;
     summary.scrollIntoView({ behavior: 'smooth' });
+
+    // Send data to Google Sheet
+    if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+        const now = new Date();
+        const formData = new FormData();
+        formData.append("name", candidateName);
+        formData.append("date", now.toLocaleDateString());
+        formData.append("time", now.toLocaleTimeString());
+        formData.append("score", score);
+        formData.append("total", quizData.length);
+
+        fetch(GOOGLE_SHEET_URL, {
+            method: "POST",
+            body: formData,
+            mode: "no-cors"
+        }).catch(err => console.error("Error logging score:", err));
+    }
 }
 
 window.onload = loadQuestions;
