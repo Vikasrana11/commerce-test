@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Accounting & Financial Management - Punjab Lecturer Mock</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background-color: #f4f6f9; color: #333; }
+        .container { max-width: 950px; background: #fff; padding: 30px; margin: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #1a365d; margin-bottom: 5px; }
+        .sub-header { text-align: center; color: #4a5568; margin-bottom: 20px; font-weight: bold; }
+        .nav-links { text-align: center; margin-bottom: 25px; padding: 10px; background: #edf2f7; border-radius: 6px; }
+        .nav-links a { margin: 0 12px; color: #2b6cb0; font-weight: bold; text-decoration: none; font-size: 14px; }
+        .nav-links a:hover { text-decoration: underline; }
+        .user-info { background: #e2e8f0; padding: 15px; border-radius: 6px; margin-bottom: 25px; }
+        .user-info label { font-weight: bold; margin-right: 10px; }
+        .user-info input { padding: 8px; width: 280px; border-radius: 4px; border: 1px solid #cbd5e0; font-size: 14px; }
+        .q-block { margin-bottom: 20px; padding: 16px 20px; border: 1px solid #e2e8f0; border-radius: 6px; background-color: #fafafa; }
+        .q-title { font-weight: 600; font-size: 15.5px; margin-bottom: 12px; color: #2d3748; line-height: 1.5; }
+        .options label { display: block; margin: 8px 0; padding: 10px 14px; border-radius: 4px; background: #fff; border: 1px solid #cbd5e0; cursor: pointer; font-size: 14.5px; }
+        .options label:hover { background-color: #edf2f7; }
+        .options input { margin-right: 10px; }
+        button.btn-submit { display: block; width: 100%; padding: 15px; background: #2b6cb0; color: white; font-size: 18px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 30px; }
+        button.btn-submit:hover { background: #2c5282; }
+        .btn-print { display: inline-block; padding: 10px 22px; background: #38a169; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 15px; font-weight: bold; }
+        .btn-print:hover { background: #2f855a; }
+        .result-correct { color: #276749; font-weight: bold; display: block; margin-top: 10px; font-size: 14px; }
+        .result-wrong { color: #9b2c2c; font-weight: bold; display: block; margin-top: 10px; font-size: 14px; }
+        #resultSummary { text-align: center; padding: 25px; border: 2px dashed #2b6cb0; border-radius: 8px; background: #ebf8ff; }
+        @media print { button, .user-info, .nav-links { display: none !important; } .container { box-shadow: none; border: none; width: 100%; padding: 0; } body { background: #fff; margin: 0; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="nav-links">
+        <a href="index.html">← Full 50-Mark Mock</a> | 
+        <a href="business-studies.html">Business Studies Mock</a>
+    </div>
+    <h1>Advanced Accounting & Cost Management</h1>
+    <div class="sub-header">High-Difficulty Exam Module | 50 Questions | 50 Marks</div>
+    
+    <div class="user-info">
+        <label for="candidateName">Candidate Name / Roll No:</label>
+        <input type="text" id="candidateName" placeholder="Enter full name" required>
+    </div>
+
+    <form id="quizForm">
+        <div id="questionsContainer"></div>
+        <button type="button" class="btn-submit" onclick="submitTest()">Submit Paper & View Analysis</button>
+    </form>
+
+    <div id="resultSummary" style="display:none; margin-top:40px;">
+        <h2>Evaluation & Performance Report</h2>
+        <p id="scoreText" style="font-size:24px; font-weight:bold; color:#2b6cb0;"></p>
+        <button class="btn-print" onclick="window.print()">Print / Save Results as PDF</button>
+    </div>
+</div>
+
+<script>
+// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+const GOOGLE_SHEET_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+const quizData = [
+    { q: "1. Under the rule of Garner vs. Murray, the deficiency arising due to the insolvency of a partner on dissolution must be borne by the solvent partners in their:", options: ["Profit-sharing ratio", "Capital ratio standing just prior to dissolution", "Equal ratio", "Initial capital contribution ratio at partnership formation"], ans: 1 },
+    { q: "2. When shares originally issued at a premium are forfeited for non-payment of call money (the premium having already been received), the Securities Premium Account is:", options: ["Debited with the premium amount", "Credited with the premium amount", "Left untouched (not debited)", "Transferred to Capital Reserve"], ans: 2 },
+    { q: "3. As per AS-14 (Accounting for Amalgamations), which method requires that all assets, liabilities, and reserves of the transferor company be incorporated into the transferee company books at their existing book values?", options: ["Purchase Method", "Pooling of Interests Method", "Equity Accounting Method", "Absorption Revaluation Method"], ans: 1 },
+    { q: "4. A company has a Fixed Cost of ₹90,000, P/V Ratio of 40%, and actual sales of ₹3,00,000. What is the Margin of Safety (in ₹)?", options: ["₹75,000", "₹2,25,000", "₹1,20,000", "₹1,80,000"], ans: 0 },
+    { q: "5. In the books of a Holding Company, pre-acquisition profits/reserves of a subsidiary company are treated as:", options: ["Revenue Profit and credited to P&L Account", "Capital Profit and used to reduce Cost of Control (Goodwill)", "General Reserve of the Holding Company", "Minority Interest only"], ans: 1 },
+    { q: "6. If Operating Leverage is 2.5 and Financial Leverage is 1.6, what will be the percentage change in Earnings Per Share (EPS) if Sales increase by 10%?", options: ["25%", "16%", "40%", "4%"], ans: 2 },
+    { q: "7. Under Section 37 of the Indian Partnership Act, 1932, an outgoing/deceased partner’s representatives are entitled to interest on the unpaid capital balance at what rate if they do not opt for a share in profits?", options: ["6% per annum", "9% per annum", "12% per annum", "Bank rate"], ans: 0 },
+    { q: "8. In standard costing, Material Usage Variance is calculated as:", options: ["Actual Price × (Standard Quantity - Actual Quantity)", "Standard Price × (Standard Quantity - Actual Quantity)", "(Standard Price - Actual Price) × Actual Quantity", "(Standard Price - Actual Price) × Standard Quantity"], ans: 1 },
+    { q: "9. In Consignment Accounting, when goods are lost due to an avoidable accident (Abnormal Loss), the cost of lost goods is credited to:", options: ["Consignment Account", "Consignee's Personal Account", "Abnormal Loss Account", "Profit & Loss Account"], ans: 0 },
+    { q: "10. In a Joint Venture where a separate set of books is not maintained and each co-venturer records only his own transactions, which account is prepared to ascertain final profit/loss?", options: ["Joint Bank Account", "Joint Venture Account", "Memorandum Joint Venture Account", "Co-venturer Capital Account"], ans: 2 },
+    { q: "11. Under Walter's Model of Dividend Policy, if the internal rate of return (r) is greater than the cost of capital (k), the optimal dividend payout ratio to maximize share price is:", options: ["100%", "50%", "0%", "75%"], ans: 2 },
+    { q: "12. Under Ind AS / Revised Schedule III, proposed dividend declared by the Board of Directors after the reporting date is recognized as:", options: ["A current liability on the balance sheet date", "A Non-adjusting Event disclosed in the Notes to Accounts", "A reduction from General Reserve directly", "An extraordinary item in Profit & Loss"], ans: 1 },
+    { q: "13. In Capital Budgeting, when evaluating two mutually exclusive projects of unequal size and lifespan, the most reliable decision criterion is:", options: ["Internal Rate of Return (IRR)", "Net Present Value (NPV)", "Payback Period", "Accounting Rate of Return (ARR)"], ans: 1 },
+    { q: "14. A firm has Current Assets of ₹8,00,000, Current Liabilities of ₹4,00,000, and Inventory of ₹2,00,000. If ₹1,00,000 of trade creditors are paid off in cash, the new Quick Ratio will be:", options: ["1.5 : 1", "1.67 : 1", "2.0 : 1", "1.33 : 1"], ans: 1 },
+    { q: "15. The concept that 'overall cost of capital (Ko) and total value of the firm (V) remain independent of financial leverage' belongs to which capital structure approach?", options: ["Net Income (NI) Approach", "Net Operating Income (NOI) Approach", "Traditional Approach", "Crane's Approach"], ans: 1 },
+    { q: "16. In Cash Flow Statement (AS-3), dividend paid by a non-financial manufacturing company is classified as:", options: ["Operating Activity", "Investing Activity", "Financing Activity", "Cash Equivalents"], ans: 2 },
+    { q: "17. A company reissues 500 forfeited equity shares of ₹10 each (₹8 called up, ₹6 paid up) at ₹7 per share as ₹8 paid up. What amount is transferred to Capital Reserve?", options: ["₹3,000", "₹2,500", "₹2,000", "₹500"], ans: 1 },
+    { q: "18. In Marginal Costing, the angle formed by the intersection of the Total Sales Line and the Total Cost Line is called the:", options: ["Angle of Deviation", "Angle of Incidence", "Angle of Contribution", "Angle of Variance"], ans: 1 },
+    { q: "19. Which variance is calculated as (Budgeted Hours - Actual Hours Worked) × Standard Overhead Rate per hour?", options: ["Fixed Overhead Capacity Variance", "Fixed Overhead Budget/Expenditure Variance", "Fixed Overhead Efficiency Variance", "Fixed Overhead Volume Variance"], ans: 2 },
+    { q: "20. When the internal rate of return (IRR) of a capital project equals its cost of capital, the Net Present Value (NPV) is:", options: ["Greater than 1", "Equal to Zero", "Negative", "Equal to the initial cash outflow"], ans: 1 },
+    { q: "21. In Hire Purchase accounts under the Asset Accrual Method, the buyer debits the Asset Account at the time of paying each installment with:", options: ["Total installment amount", "Cash price portion included in that installment", "Interest portion only", "Total cash price of the asset"], ans: 1 },
+    { q: "22. The gross working capital of a business enterprise represents:", options: ["Current Assets - Current Liabilities", "Total Current Assets", "Fixed Assets + Current Assets", "Net Worth + Long Term Debts"], ans: 1 },
+    { q: "23. If the Raw Material Storage Period is 45 days, WIP Conversion Period is 15 days, Finished Goods Storage Period is 30 days, Debtors Collection Period is 40 days, and Creditors Payment Period is 30 days, the Net Operating Cycle is:", options: ["160 days", "100 days", "130 days", "70 days"], ans: 1 },
+    { q: "24. In the financial statements of a Not-for-Profit Organization, legacy received for the construction of an auditorium is treated as a:", options: ["Revenue receipt credited to Income & Expenditure Account", "Capital receipt credited directly to a specific fund in the Balance Sheet", "Current liability", "General income"], ans: 1 },
+    { q: "25. Which theory posits that dividend policy is irrelevant because investors can create 'homemade dividends' by selling a portion of their shares?", options: ["Walter's Model", "Gordon's Model", "Modigliani-Miller (MM) Hypothesis", "Lintner's Model"], ans: 2 },
+    { q: "26. In the process of internal reconstruction of a company, the credit balance remaining in the Capital Reduction Account after writing off accumulated losses is transferred to:", options: ["General Reserve", "Capital Reserve", "Share Premium Account", "Statement of Profit & Loss"], ans: 1 },
+    { q: "27. When computing the Weighted Average Cost of Capital (WACC), which weighting method reflects the current financial structure and true economic valuation?", options: ["Book Value Weights", "Market Value Weights", "Historical Cost Weights", "Target Capital Weights"], ans: 1 },
+    { q: "28. An error where an expense of capital nature (such as freight paid on installation of new machinery) is debited to Carriage Inward Account is an:", options: ["Error of Omission", "Error of Commission", "Error of Principle", "Compensating Error"], ans: 2 },
+    { q: "29. If standard time for a job is 40 hours, actual time taken is 32 hours, and wage rate is ₹50/hour, what is the total earnings under the Rowan Incentive Plan?", options: ["₹1,600", "₹1,920", "₹2,000", "₹1,800"], ans: 1 },
+    { q: "30. A project requires an initial outlay of ₹2,00,000 and generates annual cash inflows of ₹50,000 for 6 years. What is its simple Payback Period?", options: ["3 Years", "4 Years", "5 Years", "2.5 Years"], ans: 1 },
+    { q: "31. In Holding Company accounts, mutual indebtedness between the holding company and its subsidiary (such as inter-company bills of exchange) is eliminated by:", options: ["Deducting from Consolidated Debtors and Consolidated Creditors", "Adding to Goodwill", "Transferring to Capital Reserve", "Adjusting against Minority Interest"], ans: 0 },
+    { q: "32. Financial Break-Even Point for a firm is defined as the level of EBIT at which:", options: ["Operating profit is zero", "Earnings Per Share (EPS) is equal to zero", "Total sales equal total cost", "P/V ratio is 100%"], ans: 1 },
+    { q: "33. Under AS-2 (Valuation of Inventories), which of the following costs should be excluded from the valuation of inventory?", options: ["Direct Labor Costs", "Factory Power and Utilities", "Abnormal amounts of wasted materials and storage costs", "Inward Freight charges"], ans: 2 },
+    { q: "34. Debt Service Coverage Ratio (DSCR) is primarily used by commercial banks to evaluate a borrowing firm's:", options: ["Short-term liquidity to pay suppliers", "Ability to meet long-term debt servicing obligations (interest + principal)", "Inventory turnover efficiency", "Asset utilization rate"], ans: 1 },
+    { q: "35. If sales are ₹5,00,000, variable cost is ₹3,00,000, and net profit is ₹50,000, what is the Margin of Safety percentage?", options: ["25%", "40%", "50%", "20%"], ans: 0 },
+    { q: "36. In the books of a consignor, the Del Credere commission allowed to the consignee is debited to:", options: ["Consignment Account", "Consignee Account", "Bad Debts Account", "General Profit & Loss Account"], ans: 0 },
+    { q: "37. Under the Capital Asset Pricing Model (CAPM), the cost of equity (Ke) is calculated as:", options: ["Rf + β(Rm - Rf)", "Rf + β(Rm)", "(D1 / P0) + g", "EBIT(1 - t) / Net Worth"], ans: 0 },
+    { q: "38. Which accounting convention dictates that prospective profits should not be anticipated, but all foreseeable losses must be provided for?", options: ["Materiality Convention", "Consistency Convention", "Conservatism (Prudence) Convention", "Full Disclosure Convention"], ans: 2 },
+    { q: "39. If fixed costs are ₹1,20,000, selling price per unit is ₹40, and variable cost per unit is ₹25, how many units must be sold to earn a profit of ₹30,000?", options: ["8,000 units", "10,000 units", "12,000 units", "15,000 units"], ans: 1 },
+    { q: "40. At the time of retirement of a partner, profit or loss on revaluation of assets and liabilities is transferred to the capital accounts of:", options: ["Only continuing partners in new ratio", "All partners (including retiring partner) in old profit-sharing ratio", "Only retiring partner", "Remaining partners in sacrificing ratio"], ans: 1 },
+    { q: "41. According to the Tandon Committee recommendations on working capital finance, under the 1st method of Maximum Permissible Bank Finance (MPBF), the borrower must contribute what percentage of the working capital gap from long-term sources?", options: ["15%", "25%", "33.33%", "50%"], ans: 1 },
+    { q: "42. The difference between standard overhead cost allowed for actual production and actual overhead incurred is called:", options: ["Total Overhead Cost Variance", "Volume Variance", "Expenditure Variance", "Calendar Variance"], ans: 0 },
+    { q: "43. Gordon's Share Valuation Model is based on the fundamental premise that:", options: ["Share price is independent of retained earnings", "Investors prefer current dividends over future capital gains ('Bird-in-the-hand')", "Debt cost is always higher than equity cost", "Tax rate is 50%"], ans: 1 },
+    { q: "44. In a Cash Flow Statement, an increase in Accrued Income during the financial year is adjusted under Operating Activities as:", options: ["Added to Net Profit before tax", "Deducted from Operating Profit before working capital changes", "Added to Cash Flow from Investing Activities", "Deducted from Financing Activities"], ans: 1 },
+    { q: "45. The accounting price of an equity share under the Net Assets Method (Intrinsic Value) is calculated as:", options: ["(Net Assets available for Equity Shareholders) ÷ (Number of Equity Shares)", "Capitalized Value of Maintainable Profits ÷ Number of Shares", "Expected Rate of Return ÷ Normal Rate × Paid-up Value", "Total Tangible Assets ÷ Total Outside Liabilities"], ans: 0 },
+    { q: "46. In marginal costing decision-making, when a 'Limiting / Key Factor' (such as machine hours or scarce raw material) operates, product profitability is ranked according to:", options: ["Profit per unit", "Contribution per unit of Limiting Factor", "P/V Ratio only", "Gross Margin percentage"], ans: 1 },
+    { q: "47. If the cost of goods sold is ₹6,00,000, Opening Stock is ₹80,000, and Closing Stock is ₹1,20,000, what is the Inventory Turnover Ratio?", options: ["5 times", "6 times", "7.5 times", "4 times"], ans: 1 },
+    { q: "48. In Responsibility Accounting, a responsibility center where the manager is held accountable for both revenues and expenses is designated as a:", options: ["Cost Center", "Profit Center", "Investment Center", "Revenue Center"], ans: 1 },
+    { q: "49. When debentures are issued at par and redeemable at a premium, the 'Loss on Issue of Debentures' account is shown in the Balance Sheet under:", options: ["Other Non-Current/Current Assets depending on write-off period", "Deduction from Debentures directly", "Securities Premium", "Short-term Provisions"], ans: 0 },
+    { q: "50. Which formula calculates the Cost of Irredeemable Preference Share Capital (Kp) issued at par?", options: ["Annual Preference Dividend ÷ Net Proceeds", "Annual Preference Dividend × (1 - Tax Rate) ÷ Market Price", "Face Value ÷ Annual Dividend", "Annual Dividend ÷ (Net Proceeds + Redemption Price)/2"], ans: 0 }
+];
+
+function loadQuestions() {
+    const container = document.getElementById('questionsContainer');
+    quizData.forEach((qObj, qIndex) => {
+        const div = document.createElement('div');
+        div.className = 'q-block';
+        let html = `<div class="q-title">${qObj.q}</div><div class="options">`;
+        qObj.options.forEach((opt, oIndex) => {
+            html += `<label><input type="radio" name="q${qIndex}" value="${oIndex}"> ${opt}</label>`;
+        });
+        html += `</div><div id="feedback${qIndex}"></div>`;
+        div.innerHTML = html;
+        container.appendChild(div);
+    });
+}
+
+function submitTest() {
+    const candidateName = document.getElementById('candidateName').value.trim();
+    if (!candidateName) {
+        alert("Please enter Candidate Name / Roll No before submitting.");
+        return;
+    }
+
+    let score = 0;
+    quizData.forEach((qObj, qIndex) => {
+        const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+        const feedback = document.getElementById(`feedback${qIndex}`);
+        if (selected) {
+            const val = parseInt(selected.value);
+            if (val === qObj.ans) {
+                score++;
+                feedback.innerHTML = `<span class="result-correct">✓ Correct! Option: ${qObj.options[val]}</span>`;
+            } else {
+                feedback.innerHTML = `<span class="result-wrong">✗ Incorrect. Selected: ${qObj.options[val]} | Correct Answer: ${qObj.options[qObj.ans]}</span>`;
+            }
+        } else {
+            feedback.innerHTML = `<span class="result-wrong">✗ Not Attempted | Correct Answer: ${qObj.options[qObj.ans]}</span>`;
+        }
+    });
+
+    const summary = document.getElementById('resultSummary');
+    summary.style.display = 'block';
+    document.getElementById('scoreText').innerText = `Candidate: ${candidateName} | Score: ${score} / ${quizData.length} (${((score/quizData.length)*100).toFixed(1)}%)`;
+    summary.scrollIntoView({ behavior: 'smooth' });
+
+    if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+        const now = new Date();
+        const formData = new FormData();
+        formData.append("name", candidateName + " (Adv Accounting & FM)");
+        formData.append("date", now.toLocaleDateString());
+        formData.append("time", now.toLocaleTimeString());
+        formData.append("score", score);
+        formData.append("total", quizData.length);
+
+        fetch(GOOGLE_SHEET_URL, { method: "POST", body: formData, mode: "no-cors" })
+        .catch(err => console.error("Error logging score:", err));
+    }
+}
+
+window.onload = loadQuestions;
+</script>
+</body>
+</html>
