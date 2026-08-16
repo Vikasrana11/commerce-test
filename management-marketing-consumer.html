@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management, Marketing & Consumer Protection - Punjab Lecturer Mock</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background-color: #f4f6f9; color: #333; }
+        .container { max-width: 950px; background: #fff; padding: 30px; margin: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #1a365d; margin-bottom: 5px; }
+        .sub-header { text-align: center; color: #4a5568; margin-bottom: 20px; font-weight: bold; }
+        .nav-links { text-align: center; margin-bottom: 25px; padding: 10px; background: #edf2f7; border-radius: 6px; }
+        .nav-links a { margin: 0 8px; color: #2b6cb0; font-weight: bold; text-decoration: none; font-size: 13.5px; }
+        .nav-links a:hover { text-decoration: underline; }
+        .user-info { background: #e2e8f0; padding: 15px; border-radius: 6px; margin-bottom: 25px; }
+        .user-info label { font-weight: bold; margin-right: 10px; }
+        .user-info input { padding: 8px; width: 280px; border-radius: 4px; border: 1px solid #cbd5e0; font-size: 14px; }
+        .q-block { margin-bottom: 20px; padding: 16px 20px; border: 1px solid #e2e8f0; border-radius: 6px; background-color: #fafafa; }
+        .q-title { font-weight: 600; font-size: 15.5px; margin-bottom: 12px; color: #2d3748; line-height: 1.5; }
+        .options label { display: block; margin: 8px 0; padding: 10px 14px; border-radius: 4px; background: #fff; border: 1px solid #cbd5e0; cursor: pointer; font-size: 14.5px; }
+        .options label:hover { background-color: #edf2f7; }
+        .options input { margin-right: 10px; }
+        button.btn-submit { display: block; width: 100%; padding: 15px; background: #2b6cb0; color: white; font-size: 18px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 30px; }
+        button.btn-submit:hover { background: #2c5282; }
+        .btn-print { display: inline-block; padding: 10px 22px; background: #38a169; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 15px; font-weight: bold; }
+        .btn-print:hover { background: #2f855a; }
+        .result-correct { color: #276749; font-weight: bold; display: block; margin-top: 10px; font-size: 14px; }
+        .result-wrong { color: #9b2c2c; font-weight: bold; display: block; margin-top: 10px; font-size: 14px; }
+        #resultSummary { text-align: center; padding: 25px; border: 2px dashed #2b6cb0; border-radius: 8px; background: #ebf8ff; }
+        @media print { button, .user-info, .nav-links { display: none !important; } .container { box-shadow: none; border: none; width: 100%; padding: 0; } body { background: #fff; margin: 0; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="nav-links">
+        <a href="index.html">Full Mock (50 Marks)</a> | 
+        <a href="business-studies.html">Business Studies</a> | 
+        <a href="advanced-accounting-finance.html">Adv Accounting & FM</a> |
+        <a href="statistics-banking-budget.html">Stats, Banking & Budget</a>
+    </div>
+    <h1>Management, Marketing & Consumer Protection</h1>
+    <div class="sub-header">Punjab Lecturer Exam Module | 50 Questions | 50 Marks</div>
+    
+    <div class="user-info">
+        <label for="candidateName">Candidate Name / Roll No:</label>
+        <input type="text" id="candidateName" placeholder="Enter full name" required>
+    </div>
+
+    <form id="quizForm">
+        <div id="questionsContainer"></div>
+        <button type="button" class="btn-submit" onclick="submitTest()">Submit Paper & View Results</button>
+    </form>
+
+    <div id="resultSummary" style="display:none; margin-top:40px;">
+        <h2>Evaluation & Performance Report</h2>
+        <p id="scoreText" style="font-size:24px; font-weight:bold; color:#2b6cb0;"></p>
+        <button class="btn-print" onclick="window.print()">Print / Save Results as PDF</button>
+    </div>
+</div>
+
+<script>
+// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+const GOOGLE_SHEET_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+const quizData = [
+    // Principles & Functions of Management
+    { q: "1. Under F.W. Taylor's Differential Piece Wage System, an efficient worker who achieves or exceeds the standard output is rewarded with:", options: ["Normal wage rate plus 10% bonus", "A higher piece rate on total production", "Standard fixed hourly wage plus commission", "Profit sharing bonus at year end"], ans: 1 },
+    { q: "2. The management principle of 'Espirit de Corps' formulated by Henri Fayol emphasizes:", options: ["Strict scalar chain of authority", "Promoting team spirit, harmony, and mutual trust", "Individual remuneration based on merit", "Centralized decision making"], ans: 1 },
+    { q: "3. The shortcut route designed to permit direct communication between employees of equal rank in an emergency, bypassing the formal scalar chain, is called:", options: ["Feedback Loop", "Gang Plank", "Diagonal Cross-line", "Grapevine Route"], ans: 1 },
+    { q: "4. Which of the following is an example of a single-use plan in management?", options: ["Company Policy", "Standing Procedure", "Programme and Budget", "Standard Safety Rules"], ans: 2 },
+    { q: "5. An organizational structure that combines functional specialization with project/product-based division of authority is known as a:", options: ["Line Organization", "Matrix Organization", "Functional Foremanship", "Committee Structure"], ans: 1 },
+    { q: "6. According to V.A. Graicunas' theory of Span of Management, as the number of direct subordinates (n) increases arithmetically, the complexity of relationships increases:", options: ["Linearly", "Geometrically / Exponentially", "Inversely", "Logarithmically"], ans: 1 },
+    { q: "7. Why is the recruitment process regarded as a 'positive process' while selection is considered a 'negative process'?", options: ["Recruitment costs more than selection", "Recruitment attracts a large pool of applicants, whereas selection eliminates unsuitable candidates", "Recruitment involves formal testing while selection does not", "Recruitment is done externally only"], ans: 1 },
+    { q: "8. In Herzberg's Two-Factor Theory of Motivation, which of the following is classified as a 'Motivator' rather than a 'Hygiene Factor'?", options: ["Working Conditions", "Company Policy and Administration", "Job Recognition and Personal Growth", "Salary and Job Security"], ans: 2 },
+    { q: "9. Management by Exception (MBE) states that managers should focus their attention primarily on:", options: ["Every minor deviation in the daily schedule", "Significant or critical deviations from established standards", "Only top-level board decisions", "Routine operational tasks"], ans: 1 },
+    { q: "10. In the Blake and Mouton Managerial Grid, a leadership style characterized by high concern for production (9) and high concern for people (9) is labeled as:", options: ["Country Club Management (1,9)", "Team Management (9,9)", "Impoverished Management (1,1)", "Authority-Compliance Management (9,1)"], ans: 1 },
+    { q: "11. Which element of delegation of authority can NEVER be delegated or shifted to a subordinate?", options: ["Authority", "Responsibility", "Ultimate Accountability", "Task Execution"], ans: 2 },
+    { q: "12. In the staffing function, evaluating an employee's current and past performance relative to predetermined performance standards is termed:", options: ["Job Specification", "Performance Appraisal", "Job Rotation", "Vestibule Training"], ans: 1 },
+    { q: "13. Feedforward control techniques differ from feedback control because feedforward controls:", options: ["Detect and correct errors before the actual activity occurs", "Measure performance after the project finishes", "Focus exclusively on employee grievances", "Eliminate the need for budgeting"], ans: 0 },
+    { q: "14. A leadership style where the leader gives complete freedom to subordinates to establish goals and take decisions is known as:", options: ["Autocratic / Authoritarian", "Democratic / Participative", "Laissez-faire / Free-Rein", "Paternalistic"], ans: 2 },
+    { q: "15. Which barrier to communication arises from poorly chosen words, faulty translations, and technical jargon?", options: ["Semantic / Language Barrier", "Psychological Barrier", "Organizational Barrier", "Personal Barrier"], ans: 0 },
+
+    // Business Environment & Sectoral Forms
+    { q: "16. The economic environment dimension of business includes:", options: ["Interest rates, inflation rates, and disposable income levels", "Value systems and social traditions", "Legal statutes enacted by parliament", "Scientific inventions and IT advancements"], ans: 0 },
+    { q: "17. Demonetisation of ₹500 and ₹1,000 currency notes on 8th November 2016 primarily aimed to:", options: ["Curb black money, counterfeit notes, and expand digital formal economy", "Increase cash circulation in the agricultural sector", "Depreciate the foreign exchange value of Indian Rupee", "Close down private sector commercial banks"], ans: 0 },
+    { q: "18. Under the Companies Act 2013, what is the mandatory CSR (Corporate Social Responsibility) spend for qualifying companies under Section 135?", options: ["At least 2% of the average net profits made during the 3 immediately preceding financial years", "5% of operating revenue", "1% of total paid-up share capital", "10% of gross profit before tax"], ans: 0 },
+    { q: "19. In a Joint Hindu Family (HUF) Business governed by Hindu Law, the liability of the 'Karta' is:", options: ["Limited to his share in the family property", "Unlimited and extends to personal assets", "Limited to ₹10 Lakhs", "Zero"], ans: 1 },
+    { q: "20. The voting principle governing Co-operative Societies is:", options: ["One share, one vote", "One member, one vote irrespective of shareholding", "Votes proportional to capital contributed", "Voting based on seniority"], ans: 1 },
+    { q: "21. A 'Deemed Public Company' under Section 2(71) of the Companies Act 2013 is a private company which is a:", options: ["Holding company of another private company", "Subsidiary of a public company", "Non-profit charitable institution", "Foreign branch office"], ans: 1 },
+    { q: "22. Which form of business organization is uniquely suited for professional ventures requiring limited liability without the rigid compliance structure of a corporation?", options: ["Sole Proprietorship", "Limited Liability Partnership (LLP)", "General Partnership under 1932 Act", "Statutory Corporation"], ans: 1 },
+    { q: "23. Knowledge Process Outsourcing (KPO) differs from Business Process Outsourcing (BPO) because KPO involves:", options: ["Routine data entry and clerical operations", "High-level advanced analytical, research, and technical expertise", "Physical manufacturing processes", "Warehousing logistics only"], ans: 1 },
+    { q: "24. In E-Tourism and civil aviation ticketing, what does 'GDS' stand for?", options: ["Global Distribution System", "General Data Server", "Government Destination Scheme", "Gross Domestic Sales"], ans: 0 },
+    { q: "25. Which type of primary industry involves breeding and reproduction of plants and animals for further use?", options: ["Extractive Industry", "Genetic Industry", "Synthetic Industry", "Processing Industry"], ans: 1 },
+
+    // Marketing Management & Marketing Mix
+    { q: "26. Which marketing philosophy holds the belief that 'consumers will favor products that offer the most quality, performance, and innovative features'?", options: ["Production Concept", "Product Concept", "Selling Concept", "Societal Marketing Concept"], ans: 1 },
+    { q: "27. The 'Selling Concept' of marketing relies heavily on:", options: ["Understanding consumer needs prior to manufacturing", "Aggressive selling and heavy promotional pressure to push products", "Achieving high production efficiency and wide distribution", "Societal and environmental sustainability"], ans: 1 },
+    { q: "28. In the Product Life Cycle (PLC), at which stage do industry profits reach their peak before sales volume peaks?", options: ["Introduction Stage", "Growth Stage", "Maturity Stage", "Decline Stage"], ans: 1 },
+    { q: "29. Charging a very high introductory price for a new innovative product to recover R&D costs before competitors enter is termed:", options: ["Penetration Pricing", "Price Skimming", "Predatory Pricing", "Cost-Plus Mark-up Pricing"], ans: 1 },
+    { q: "30. Setting a low initial price to attract a large number of buyers and capture substantial market share quickly is:", options: ["Price Skimming", "Penetration Pricing", "Peak-load Pricing", "Value-based Pricing"], ans: 1 },
+    { q: "31. The brand name, design, logo, or symbol that has been given legal protection and exclusive rights under intellectual property law is called a:", options: ["Brand Equity", "Trademark", "Patent Right", "Copyright"], ans: 1 },
+    { q: "32. The immediate physical container enclosing a product (such as a toothpaste tube or perfume bottle) is classified as:", options: ["Primary Packaging", "Secondary Packaging", "Transportation Packaging", "Transit Shell"], ans: 0 },
+    { q: "33. A direct marketing channel where the manufacturer sells goods directly to the consumer without any intermediaries is a:", options: ["Zero-Level Channel", "One-Level Channel", "Two-Level Channel", "Three-Level Channel"], ans: 0 },
+    { q: "34. A 'Push Promotion Strategy' primarily relies on:", options: ["Direct advertising to induce end-consumers to pull goods through channels", "Using sales force and trade promotion to induce intermediaries to carry and sell the product", "Public relation press conferences only", "Government regulatory subsidies"], ans: 1 },
+    { q: "35. Offering samples, discount coupons, cash refunds, and buy-one-get-one-free offers are examples of:", options: ["Personal Selling", "Sales Promotion", "Publicity", "Institutional Advertising"], ans: 1 },
+    { q: "36. Which function of marketing involves gathering and analyzing information about market trends, consumer behavior, and competitor strategies?", options: ["Standardization and Grading", "Marketing Research & Information System", "Product Designing", "Physical Distribution"], ans: 1 },
+    { q: "37. 'Dual Distribution' in marketing logistics refers to an arrangement where a producer:", options: ["Uses two or more different channels to reach the same or different target market segments", "Sells exclusively through two foreign wholesalers", "Manufactures both consumer and industrial goods", "Exports only to two countries"], ans: 0 },
+    { q: "38. The added value endowed to products and services reflected in how consumers feel, think, and act with respect to the brand is known as:", options: ["Brand Loyalty", "Brand Equity", "Brand Association", "Brand Extension"], ans: 1 },
+    { q: "39. Which element of the promotion mix is unpaid, carries high credibility, and comes in the form of news stories or editorial features?", options: ["Advertising", "Personal Selling", "Publicity / Media Coverage", "Direct Mail Marketing"], ans: 2 },
+    { q: "40. Developing and promoting environmentally safe, recyclable, and energy-efficient products is termed:", options: ["Digital Marketing", "Green Marketing", "Guerrilla Marketing", "Niche Marketing"], ans: 1 },
+
+    // Consumer Protection Act (CPA) 2019
+    { q: "41. Under the Consumer Protection Act 2019, the pecuniary jurisdiction of the 'District Consumer Disputes Redressal Commission' is up to:", options: ["₹50 Lakhs", "₹1 Crore (Value of goods/services paid does not exceed ₹1 Cr)", "₹10 Crores", "₹20 Crores"], ans: 1 },
+    { q: "42. Under CPA 2019, the 'State Consumer Disputes Redressal Commission' entertains complaints where the consideration paid is:", options: ["Exceeding ₹1 Crore but does not exceed ₹10 Crores", "Exceeding ₹50 Lakhs but up to ₹1 Crore", "Exceeding ₹10 Crores only", "Up to ₹20 Lakhs only"], ans: 0 },
+    { q: "43. Under CPA 2019, complaints where the value of consideration paid exceeds ₹10 Crores are filed directly before the:", options: ["Supreme Court of India", "National Consumer Disputes Redressal Commission (NCDRC)", "High Court of the State", "Central Government Tribunal"], ans: 1 },
+    { q: "44. What is the limitation period for filing a complaint before a Consumer Commission under CPA 2019 from the date on which the cause of action arose?", options: ["1 Year", "2 Years", "3 Years", "5 Years"], ans: 1 },
+    { q: "45. An appeal against an order passed by the District Commission can be preferred before the State Commission within how many days under CPA 2019?", options: ["30 Days", "45 Days", "60 Days", "90 Days"], ans: 1 },
+    { q: "46. Which statutory authority was established under the Consumer Protection Act 2019 to regulate matters relating to violation of consumer rights, unfair trade practices, and false/misleading advertisements?", options: ["Consumer Guidance Society of India", "Central Consumer Protection Authority (CCPA)", "Competition Commission of India (CCI)", "Bureau of Indian Standards (BIS)"], ans: 1 },
+    { q: "47. The newly introduced concept of 'Product Liability' under the Consumer Protection Act 2019 holds which parties liable for harm caused by a defective product or service deficiency?", options: ["Product Manufacturer, Product Service Provider, and Product Seller", "Government Inspectors only", "Advertiser models only", "Insurance companies exclusively"], ans: 0 },
+    { q: "48. How many statutory Consumer Rights are explicitly recognized under the Consumer Protection Act 2019?", options: ["4 Rights", "6 Rights (Safety, Information, Choice, Heard, Redressal, Consumer Education)", "8 Rights", "10 Rights"], ans: 1 },
+    { q: "49. Under the Consumer Protection (E-Commerce) Rules, 2020, an e-commerce entity is legally required to acknowledge consumer complaints within what timeframe?", options: ["24 Hours", "48 Hours", "7 Days", "15 Days"], ans: 1 },
+    { q: "50. Which quality certification mark is issued by the Government of India for standardized industrial and electrical consumer products?", options: ["AGMARK", "ISI Mark (BIS)", "FPO Mark", "Eco-mark"], ans: 1 }
+];
+
+function loadQuestions() {
+    const container = document.getElementById('questionsContainer');
+    quizData.forEach((qObj, qIndex) => {
+        const div = document.createElement('div');
+        div.className = 'q-block';
+        let html = `<div class="q-title">${qObj.q}</div><div class="options">`;
+        qObj.options.forEach((opt, oIndex) => {
+            html += `<label><input type="radio" name="q${qIndex}" value="${oIndex}"> ${opt}</label>`;
+        });
+        html += `</div><div id="feedback${qIndex}"></div>`;
+        div.innerHTML = html;
+        container.appendChild(div);
+    });
+}
+
+function submitTest() {
+    const candidateName = document.getElementById('candidateName').value.trim();
+    if (!candidateName) {
+        alert("Please enter Candidate Name / Roll No before submitting.");
+        return;
+    }
+
+    let score = 0;
+    quizData.forEach((qObj, qIndex) => {
+        const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+        const feedback = document.getElementById(`feedback${qIndex}`);
+        if (selected) {
+            const val = parseInt(selected.value);
+            if (val === qObj.ans) {
+                score++;
+                feedback.innerHTML = `<span class="result-correct">✓ Correct! Selected: ${qObj.options[val]}</span>`;
+            } else {
+                feedback.innerHTML = `<span class="result-wrong">✗ Incorrect. Selected: ${qObj.options[val]} | Correct Answer: ${qObj.options[qObj.ans]}</span>`;
+            }
+        } else {
+            feedback.innerHTML = `<span class="result-wrong">✗ Not Attempted | Correct Answer: ${qObj.options[qObj.ans]}</span>`;
+        }
+    });
+
+    const summary = document.getElementById('resultSummary');
+    summary.style.display = 'block';
+    document.getElementById('scoreText').innerText = `Candidate: ${candidateName} | Score: ${score} / ${quizData.length} (${((score/quizData.length)*100).toFixed(1)}%)`;
+    summary.scrollIntoView({ behavior: 'smooth' });
+
+    if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+        const now = new Date();
+        const formData = new FormData();
+        formData.append("name", candidateName + " (Management, Mktg & CPA 2019)");
+        formData.append("date", now.toLocaleDateString());
+        formData.append("time", now.toLocaleTimeString());
+        formData.append("score", score);
+        formData.append("total", quizData.length);
+
+        fetch(GOOGLE_SHEET_URL, { method: "POST", body: formData, mode: "no-cors" })
+        .catch(err => console.error("Error logging score:", err));
+    }
+}
+
+window.onload = loadQuestions;
+</script>
+</body>
+</html>
