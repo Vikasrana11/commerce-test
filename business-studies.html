@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Studies - Punjab Lecturer Commerce</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background-color: #f4f6f9; color: #333; }
+        .container { max-width: 900px; background: #fff; padding: 30px; margin: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #1a365d; margin-bottom: 5px; }
+        .sub-header { text-align: center; color: #4a5568; margin-bottom: 25px; font-weight: bold; }
+        .nav-links { text-align: center; margin-bottom: 20px; }
+        .nav-links a { margin: 0 10px; color: #2b6cb0; font-weight: bold; text-decoration: none; }
+        .user-info { background: #e2e8f0; padding: 15px; border-radius: 6px; margin-bottom: 20px; }
+        .user-info label { font-weight: bold; margin-right: 10px; }
+        .user-info input { padding: 8px; width: 250px; border-radius: 4px; border: 1px solid #cbd5e0; font-size: 14px; }
+        .q-block { margin-bottom: 20px; padding: 15px 20px; border: 1px solid #e2e8f0; border-radius: 6px; background-color: #fafafa; }
+        .q-title { font-weight: 600; font-size: 16px; margin-bottom: 12px; color: #2d3748; }
+        .options label { display: block; margin: 8px 0; padding: 8px 12px; border-radius: 4px; background: #fff; border: 1px solid #cbd5e0; cursor: pointer; }
+        .options label:hover { background-color: #edf2f7; }
+        .options input { margin-right: 10px; }
+        button.btn-submit { display: block; width: 100%; padding: 15px; background: #2b6cb0; color: white; font-size: 18px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 30px; }
+        button.btn-submit:hover { background: #2c5282; }
+        .btn-print { display: inline-block; padding: 10px 20px; background: #38a169; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 15px; }
+        .result-correct { color: #276749; font-weight: bold; display: block; margin-top: 8px; }
+        .result-wrong { color: #9b2c2c; font-weight: bold; display: block; margin-top: 8px; }
+        #resultSummary { text-align: center; padding: 20px; border: 2px dashed #2b6cb0; border-radius: 8px; background: #ebf8ff; }
+        @media print { button, .user-info, .nav-links { display: none !important; } .container { box-shadow: none; border: none; width: 100%; padding: 0; } body { background: #fff; margin: 0; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="nav-links">
+        <a href="index.html">← Back to Full Mock Test</a>
+    </div>
+    <h1>Business Studies Subject Test</h1>
+    <div class="sub-header">Focused MCQs | Punjab Commerce Lecturer Syllabus</div>
+    
+    <div class="user-info">
+        <label for="candidateName">Candidate Name / Roll No:</label>
+        <input type="text" id="candidateName" placeholder="Enter your full name" required>
+    </div>
+
+    <form id="quizForm">
+        <div id="questionsContainer"></div>
+        <button type="button" class="btn-submit" onclick="submitTest()">Submit Paper & View Results</button>
+    </form>
+
+    <div id="resultSummary" style="display:none; margin-top:40px;">
+        <h2>Test Performance Summary</h2>
+        <p id="scoreText" style="font-size:24px; font-weight:bold; color:#2b6cb0;"></p>
+        <button class="btn-print" onclick="window.print()">Print / Save Results as PDF</button>
+    </div>
+</div>
+
+<script>
+// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+const GOOGLE_SHEET_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+const quizData = [
+    { q: "1. Which of the following is considered an economic objective of business?", options: ["Providing employment", "Profit earning", "Community welfare", "Employee safety"], ans: 1 },
+    { q: "2. The primary cause of speculative business risks is:", options: ["Fluctuations in demand and prices", "Natural calamities like floods", "Employee dishonesty", "Government budget rules"], ans: 0 },
+    { q: "3. Which form of business enterprise has continuous existence independent of its members?", options: ["Sole Proprietorship", "General Partnership", "Joint Stock Company", "Joint Hindu Family Business"], ans: 2 },
+    { q: "4. The maximum number of members in a private company under the Companies Act 2013 is:", options: ["50", "100", "200", "Unlimited"], ans: 2 },
+    { q: "5. A Limited Liability Partnership (LLP) must be registered under which legislation?", options: ["Partnership Act 1932", "LLP Act 2008", "Companies Act 2013", "Societies Registration Act"], ans: 1 },
+    { q: "6. Which management principle proposed by Henri Fayol stresses that there should be 'one head and one plan' for a group of activities having the same objective?", options: ["Unity of Command", "Unity of Direction", "Scalar Chain", "Esprit de Corps"], ans: 1 },
+    { q: "7. Scientific management principles and functional foremanship were developed by:", options: ["Henri Fayol", "F.W. Taylor", "Peter Drucker", "Max Weber"], ans: 1 },
+    { q: "8. The process of delegating authority and spreading decision-making powers throughout all levels of an organization is known as:", options: ["Centralization", "Decentralization", "Span of Control", "Departmentalization"], ans: 1 },
+    { q: "9. Which function of management bridges the gap between where we are and where we want to go?", options: ["Organizing", "Planning", "Directing", "Controlling"], ans: 1 },
+    { q: "10. In Maslow's Need Hierarchy, job security and pension plans fall under which need category?", options: ["Basic Physiological Needs", "Safety and Security Needs", "Social Needs", "Self-Actualization Needs"], ans: 1 },
+    { q: "11. The four P's of the Marketing Mix were popularized by:", options: ["Philip Kotler", "E. Jerome McCarthy", "Peter Drucker", "Theodore Levitt"], ans: 1 },
+    { q: "12. Which element of the promotion mix involves direct face-to-face interaction with prospective buyers?", options: ["Advertising", "Sales Promotion", "Personal Selling", "Public Relations"], ans: 2 },
+    { q: "13. Under the Consumer Protection Act 2019, 'Central Consumer Protection Authority' (CCPA) was established to:", options: ["Provide legal aid only", "Promote, protect, and enforce consumer rights", "Set product manufacturing prices", "Tax online sellers"], ans: 1 },
+    { q: "14. Business ethics primarily deal with:", options: ["Legal compliance only", "Moral principles and values guiding business conduct", "Maximizing short-term profits", "Avoiding tax audits"], ans: 1 },
+    { q: "15. Contracting out non-core business activities to third-party specialized service providers is called:", options: ["E-commerce", "Outsourcing (BPO)", "Franchising", "Joint Venture"], ans: 1 },
+    { q: "16. Which principle of insurance states that the insured should not make a profit out of a loss?", options: ["Principle of Indemnity", "Principle of Utmost Good Faith", "Principle of Insurable Interest", "Principle of Causa Proxima"], ans: 0 },
+    { q: "17. A fire insurance policy is generally taken for a maximum period of:", options: ["1 Year", "5 Years", "10 Years", "Lifetime"], ans: 0 },
+    { q: "18. Which function of warehousing helps in holding stock to match demand during off-seasons?", options: ["Price Stabilization", "Financing", "Grading and Packing", "Risk Bearing"], ans: 0 },
+    { q: "19. The digital system of filing tax returns and regulatory forms electronically is known as:", options: ["E-office", "E-filing", "E-tourism", "E-banking"], ans: 1 },
+    { q: "20. Which sector includes enterprises owned and managed jointly by private entrepreneurs and the government?", options: ["Private Sector", "Public Sector", "Joint Sector", "Co-operative Sector"], ans: 2 },
+    { q: "21. Capital structure decision involves determining the optimal ratio between:", options: ["Current Assets and Current Liabilities", "Debt and Equity", "Fixed Assets and Working Capital", "Gross Profit and Net Profit"], ans: 1 },
+    { q: "22. The minimum number of directors required in a Public Limited Company is:", options: ["1", "2", "3", "7"], ans: 2 },
+    { q: "23. Which marketing philosophy emphasizes environmental protection and consumer well-being alongside profits?", options: ["Product Concept", "Selling Concept", "Societal Marketing Concept", "Production Concept"], ans: 2 },
+    { q: "24. The right of a consumer to seek remedies against unfair trade practices under CPA 2019 is the:", options: ["Right to Information", "Right to Redressal", "Right to Consumer Education", "Right to Safety"], ans: 1 },
+    { q: "25. Which type of primary industry involves extracting products from natural sources like soil, air, or water?", options: ["Extractive Industry", "Genetic Industry", "Manufacturing Industry", "Construction Industry"], ans: 0 }
+];
+
+function loadQuestions() {
+    const container = document.getElementById('questionsContainer');
+    quizData.forEach((qObj, qIndex) => {
+        const div = document.createElement('div');
+        div.className = 'q-block';
+        let html = `<div class="q-title">${qObj.q}</div><div class="options">`;
+        qObj.options.forEach((opt, oIndex) => {
+            html += `<label><input type="radio" name="q${qIndex}" value="${oIndex}"> ${opt}</label>`;
+        });
+        html += `</div><div id="feedback${qIndex}"></div>`;
+        div.innerHTML = html;
+        container.appendChild(div);
+    });
+}
+
+function submitTest() {
+    const candidateName = document.getElementById('candidateName').value.trim();
+    if (!candidateName) {
+        alert("Please enter your Name before submitting.");
+        return;
+    }
+
+    let score = 0;
+    quizData.forEach((qObj, qIndex) => {
+        const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+        const feedback = document.getElementById(`feedback${qIndex}`);
+        if (selected) {
+            const val = parseInt(selected.value);
+            if (val === qObj.ans) {
+                score++;
+                feedback.innerHTML = `<span class="result-correct">✓ Correct! Selected: ${qObj.options[val]}</span>`;
+            } else {
+                feedback.innerHTML = `<span class="result-wrong">✗ Incorrect. Selected: ${qObj.options[val]} | Correct Answer: ${qObj.options[qObj.ans]}</span>`;
+            }
+        } else {
+            feedback.innerHTML = `<span class="result-wrong">✗ Not Answered | Correct Answer: ${qObj.options[qObj.ans]}</span>`;
+        }
+    });
+
+    const summary = document.getElementById('resultSummary');
+    summary.style.display = 'block';
+    document.getElementById('scoreText').innerText = `Candidate: ${candidateName} | Score: ${score} / ${quizData.length}`;
+    summary.scrollIntoView({ behavior: 'smooth' });
+
+    if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+        const now = new Date();
+        const formData = new FormData();
+        formData.append("name", candidateName + " (Business Studies)");
+        formData.append("date", now.toLocaleDateString());
+        formData.append("time", now.toLocaleTimeString());
+        formData.append("score", score);
+        formData.append("total", quizData.length);
+
+        fetch(GOOGLE_SHEET_URL, { method: "POST", body: formData, mode: "no-cors" })
+        .catch(err => console.error("Error logging score:", err));
+    }
+}
+
+window.onload = loadQuestions;
+</script>
+</body>
+</html>
