@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics, Banking & Government Budget - Punjab Lecturer Mock</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background-color: #f4f6f9; color: #333; }
+        .container { max-width: 950px; background: #fff; padding: 30px; margin: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #1a365d; margin-bottom: 5px; }
+        .sub-header { text-align: center; color: #4a5568; margin-bottom: 20px; font-weight: bold; }
+        .nav-links { text-align: center; margin-bottom: 25px; padding: 10px; background: #edf2f7; border-radius: 6px; }
+        .nav-links a { margin: 0 10px; color: #2b6cb0; font-weight: bold; text-decoration: none; font-size: 13.5px; }
+        .nav-links a:hover { text-decoration: underline; }
+        .user-info { background: #e2e8f0; padding: 15px; border-radius: 6px; margin-bottom: 25px; }
+        .user-info label { font-weight: bold; margin-right: 10px; }
+        .user-info input { padding: 8px; width: 280px; border-radius: 4px; border: 1px solid #cbd5e0; font-size: 14px; }
+        .q-block { margin-bottom: 20px; padding: 16px 20px; border: 1px solid #e2e8f0; border-radius: 6px; background-color: #fafafa; }
+        .q-title { font-weight: 600; font-size: 15.5px; margin-bottom: 12px; color: #2d3748; line-height: 1.5; }
+        .options label { display: block; margin: 8px 0; padding: 10px 14px; border-radius: 4px; background: #fff; border: 1px solid #cbd5e0; cursor: pointer; font-size: 14.5px; }
+        .options label:hover { background-color: #edf2f7; }
+        .options input { margin-right: 10px; }
+        button.btn-submit { display: block; width: 100%; padding: 15px; background: #2b6cb0; color: white; font-size: 18px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 30px; }
+        button.btn-submit:hover { background: #2c5282; }
+        .btn-print { display: inline-block; padding: 10px 22px; background: #38a169; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 15px; font-weight: bold; }
+        .btn-print:hover { background: #2f855a; }
+        .result-correct { color: #276749; font-weight: bold; display: block; margin-top: 10px; font-size: 14px; }
+        .result-wrong { color: #9b2c2c; font-weight: bold; display: block; margin-top: 10px; font-size: 14px; }
+        #resultSummary { text-align: center; padding: 25px; border: 2px dashed #2b6cb0; border-radius: 8px; background: #ebf8ff; }
+        @media print { button, .user-info, .nav-links { display: none !important; } .container { box-shadow: none; border: none; width: 100%; padding: 0; } body { background: #fff; margin: 0; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="nav-links">
+        <a href="index.html">Full Mock (50 Marks)</a> | 
+        <a href="business-studies.html">Business Studies</a> | 
+        <a href="advanced-accounting-finance.html">Adv Accounting & FM</a>
+    </div>
+    <h1>Statistics, Money, Banking & Public Budget</h1>
+    <div class="sub-header">Punjab Lecturer Exam Module | 50 Questions | 50 Marks</div>
+    
+    <div class="user-info">
+        <label for="candidateName">Candidate Name / Roll No:</label>
+        <input type="text" id="candidateName" placeholder="Enter full name" required>
+    </div>
+
+    <form id="quizForm">
+        <div id="questionsContainer"></div>
+        <button type="button" class="btn-submit" onclick="submitTest()">Submit Paper & View Results</button>
+    </form>
+
+    <div id="resultSummary" style="display:none; margin-top:40px;">
+        <h2>Evaluation & Performance Report</h2>
+        <p id="scoreText" style="font-size:24px; font-weight:bold; color:#2b6cb0;"></p>
+        <button class="btn-print" onclick="window.print()">Print / Save Results as PDF</button>
+    </div>
+</div>
+
+<script>
+// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+const GOOGLE_SHEET_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+const quizData = [
+    // Statistics & Mathematical Tools
+    { q: "1. For a moderately skewed frequency distribution, the empirical relationship between Mean, Median, and Mode is:", options: ["Mode = 2 Median - 3 Mean", "Mode = 3 Median - 2 Mean", "Median = 3 Mode - 2 Mean", "Mean = 3 Median - 2 Mode"], ans: 1 },
+    { q: "2. If the standard deviation of variable X is 6, what is the standard deviation of Y = 3X + 10?", options: ["28", "18", "6", "8"], ans: 1 },
+    { q: "3. If regression coefficients are byx = -0.8 and bxy = -0.45, what is the coefficient of correlation (r)?", options: ["+0.60", "-0.60", "-0.36", "+0.36"], ans: 1 },
+    { q: "4. The Coefficient of Determination (r²) measures:", options: ["The proportion of total variation in the dependent variable explained by the independent variable", "The absolute error in the regression estimate", "The ratio of Mean to Standard Deviation", "The degrees of freedom in ANOVA"], ans: 0 },
+    { q: "5. Fisher's Ideal Index Number is defined as the:", options: ["Arithmetic Mean of Laspeyres and Paasche index", "Geometric Mean of Laspeyres and Paasche index", "Harmonic Mean of Laspeyres and Paasche index", "Weighted aggregate of base year values"], ans: 1 },
+    { q: "6. Which index number formula satisfies the Factor Reversal Test (P01 × Q01 = Σp1q1 / Σp0q0)?", options: ["Laspeyres' Index", "Paasche's Index", "Fisher's Ideal Index", "Marshall-Edgeworth Index"], ans: 2 },
+    { q: "7. In a 3 × 4 contingency table, the degrees of freedom for calculating the Chi-Square (χ²) test statistic is:", options: ["12", "7", "6", "11"], ans: 2 },
+    { q: "8. In testing a statistical hypothesis, committing a Type I error refers to:", options: ["Rejecting a true Null Hypothesis (H0)", "Accepting a false Null Hypothesis (H0)", "Rejecting an Alternative Hypothesis (H1)", "Selecting a sample size less than 30"], ans: 0 },
+    { q: "9. If the Arithmetic Mean of two numbers is 25 and their Harmonic Mean is 9, what is their Geometric Mean?", options: ["15", "17", "225", "12.5"], ans: 0 },
+    { q: "10. In a linear regression line Y = a + bX, the regression line always passes through which specific point?", options: ["(0, 0)", "(X̄, Ȳ)", "(1, 1)", "(ΣX, ΣY)"], ans: 1 },
+    { q: "11. When nominal wages are converted into real wages to eliminate the effect of inflation, the process is termed:", options: ["Base Shifting", "Splicing", "Deflating", "Extrapolation"], ans: 2 },
+    { q: "12. An F-test (Variance Ratio Test) is primarily applied to:", options: ["Test the significance of a single population mean", "Compare two independent population variances", "Test association of attributes", "Measure skewness"], ans: 1 },
+    { q: "13. If all observations in a dataset are multiplied by a constant k = 4, the variance of the new series will increase by a factor of:", options: ["4", "2", "16", "Remains unchanged"], ans: 2 },
+    { q: "14. In Chi-Square goodness-of-fit tests, what is the generally accepted minimum expected frequency for any cell?", options: ["1", "5", "10", "30"], ans: 1 },
+    { q: "15. The power of a statistical hypothesis test is mathematically expressed as:", options: ["1 - α (where α is Type I error)", "1 - β (where β is Type II error)", "α + β", "β / α"], ans: 1 },
+    { q: "16. For a symmetrical normal distribution, the value of Karl Pearson's coefficient of skewness is:", options: ["+1", "-1", "0", "0.5"], ans: 2 },
+    { q: "17. The Quartile Deviation (Semi-Interquartile Range) is computed as:", options: ["(Q3 - Q1) / 2", "(Q3 + Q1) / 2", "Q3 - Q1", "(Q3 - Q1) / (Q3 + Q1)"], ans: 0 },
+    { q: "18. Which index number method uses the average quantities of both base year and current year (q0 + q1)/2 as weights?", options: ["Laspeyres' Index", "Paasche's Index", "Marshall-Edgeworth Index", "Bowley's Index"], ans: 2 },
+    { q: "19. The two regression lines intersect at right angles (90°) when the correlation coefficient (r) between variables is:", options: ["+1 or -1", "0", "0.5", "-0.5"], ans: 1 },
+    { q: "20. In Student's two-sample t-test for comparing two independent sample means with sample sizes n1 and n2, the degrees of freedom is:", options: ["n1 + n2 - 1", "n1 + n2 - 2", "n1 + n2", "(n1 - 1)(n2 - 1)"], ans: 1 },
+    { q: "21. When combining two separate index series with different base periods into a continuous unified series, the process is called:", options: ["Base Shifting", "Splicing", "Weighting", "Extrapolation"], ans: 1 },
+    { q: "22. Which measure of dispersion is free from the units of measurement and used to compare consistency between two series?", options: ["Standard Deviation", "Mean Deviation", "Coefficient of Variation", "Range"], ans: 2 },
+    { q: "23. If the slope of a linear demand function is negative, it mathematically reflects:", options: ["Inverse relationship between price and quantity demanded", "Direct relationship between price and demand", "Zero elasticity", "Unitary elasticity"], ans: 0 },
+    { q: "24. In a moderately asymmetrical distribution, if Mean = 30 and Median = 28, what is the empirical Mode?", options: ["24", "26", "32", "29"], ans: 0 },
+    { q: "25. Which data processing component handles arithmetic logic operations inside a computerized accounting system?", options: ["Control Unit", "ALU (Arithmetic Logic Unit)", "Secondary Memory", "Input Interface"], ans: 1 },
+
+    // Money, Banking, Digital Payments & Public Finance
+    { q: "26. In India, Narrow Money (M1) as defined by the Reserve Bank of India consists of:", options: ["Currency with public + Demand deposits with banking system + Other deposits with RBI", "M1 + Post office savings deposits", "Currency with public + Time deposits with banks", "M1 + Total post office deposits"], ans: 0 },
+    { q: "27. Broad Money (M3) is calculated as:", options: ["M1 + Time Deposits with the banking system", "M1 + Demand Deposits", "Currency with public + CRR", "M2 + National Savings Certificates"], ans: 0 },
+    { q: "28. Reserve Money (High-Powered Money / M0) includes:", options: ["Currency in circulation + Bankers' deposits with RBI + Other deposits with RBI", "M3 + Post office deposits", "Demand deposits + Fixed deposits", "Government securities only"], ans: 0 },
+    { q: "29. If the Legal Reserve Ratio (LRR) is set at 10%, what is the value of the Money Multiplier?", options: ["5", "10", "20", "1"], ans: 1 },
+    { q: "30. The rate at which the Reserve Bank of India lends short-term funds to commercial banks against government collateral is the:", options: ["Bank Rate", "Repo Rate", "Reverse Repo Rate", "Marginal Standing Facility Rate"], ans: 1 },
+    { q: "31. Statutory Liquidity Ratio (SLR) requires commercial banks to maintain a specified percentage of their Net Demand and Time Liabilities (NDTL) in:", options: ["Cash reserves with RBI only", "Liquid assets like Cash, Gold, and unencumbered Government Securities", "Shares of commercial corporations", "Foreign currency deposits"], ans: 1 },
+    { q: "32. Which of the following is a qualitative (selective) credit control tool of the central bank?", options: ["Open Market Operations (OMO)", "Cash Reserve Ratio (CRR)", "Fixation of Margin Requirements", "Repo Rate"], ans: 2 },
+    { q: "33. Marginal Standing Facility (MSF) enables commercial banks to borrow overnight funds from RBI against approved securities at a rate:", options: ["Lower than the Repo Rate", "Higher than the Repo Rate", "Equal to the Reverse Repo Rate", "Zero percent interest"], ans: 1 },
+    { q: "34. Central Bank Digital Currency (CBDC / Digital Rupee) in India represents:", options: ["A decentralized cryptocurrency like Bitcoin", "Sovereign legal tender issued by RBI in digital form", "A private payment wallet balance", "A commercial bank fixed deposit token"], ans: 1 },
+    { q: "35. What is the minimum transaction value limit for customer transactions initiated under the RTGS (Real Time Gross Settlement) system?", options: ["₹10,000", "₹50,000", "₹1,00,000", "₹2,00,000"], ans: 3 },
+    { q: "36. Unified Payments Interface (UPI) was developed in India by which entity?", options: ["Reserve Bank of India (RBI)", "National Payments Corporation of India (NPCI)", "State Bank of India (SBI)", "NITI Aayog"], ans: 1 },
+    { q: "37. Which of the following receipts is classified as a Capital Receipt in the Government Budget?", options: ["Corporation Tax Collections", "Disinvestment Proceeds from selling PSU equity", "Dividends from public sector undertakings", "Customs Duties"], ans: 1 },
+    { q: "38. Fiscal Deficit in the Union Government Budget is precisely equal to:", options: ["Total Expenditure - Total Receipts excluding Borrowings (Net Borrowings)", "Revenue Expenditure - Revenue Receipts", "Total Expenditure - Total Tax Revenue", "Fiscal Deficit - Interest Payments"], ans: 0 },
+    { q: "39. Primary Deficit is computed as:", options: ["Fiscal Deficit - Interest Payments", "Revenue Deficit - Capital Outlays", "Fiscal Deficit + Subsidies", "Total Borrowings - Disinvestment"], ans: 0 },
+    { q: "40. If the Primary Deficit is zero, it implies that:", options: ["Fiscal deficit is equal to interest payments", "Revenue deficit is zero", "Government has no outstanding public debt", "Tax revenue equals total expenditure"], ans: 0 },
+    { q: "41. Monetized Deficit refers to that part of the government deficit which is financed through:", options: ["Borrowing from the international market", "Borrowings from the Reserve Bank of India via new money creation", "Selling public sector shares to private investors", "Issuing corporate bonds"], ans: 1 },
+    { q: "42. The Fiscal Responsibility and Budget Management (FRBM) Act was enacted by the Parliament of India in the year:", options: ["1991", "2000", "2003", "2014"], ans: 2 },
+    { q: "43. Core Inflation differs from Headline Inflation because Core Inflation excludes:", options: ["Manufacturing goods prices", "Volatile food and energy (fuel) price items", "Service sector tariffs", "Imported machinery prices"], ans: 1 },
+    { q: "44. An expansionary fiscal policy adopted during economic downturns typically involves:", options: ["Increasing government expenditure and/or reducing tax rates", "Decreasing government spending and raising tax rates", "Increasing CRR and SLR ratios", "Selling government bonds through OMO"], ans: 0 },
+    { q: "45. A Sinking Fund created by the government is designated specifically for:", options: ["Financing day-to-day administrative salaries", "Gradual redemption and repayment of public debt", "Funding natural calamity reliefs", "Subsidizing agricultural inputs"], ans: 1 },
+    { q: "46. Under the CAMELS supervisory rating framework for banks, the letter 'C' stands for:", options: ["Credit Control", "Capital Adequacy", "Cash Flow Coverage", "Customer Service"], ans: 1 },
+    { q: "47. Non-tax revenue of the Government of India includes:", options: ["Goods and Services Tax (GST)", "Income Tax", "Dividends and Profits from Public Sector Undertakings", "Union Excise Duties"], ans: 2 },
+    { q: "48. In the context of public expenditure classification, spending on roads, bridges, and power plants is categorized as:", options: ["Capital and Developmental Expenditure", "Revenue and Non-Developmental Expenditure", "Transfer Payments", "Primary Deficit Outlay"], ans: 0 },
+    { q: "49. Which regulatory body is vested with statutory authority to supervise and regulate Non-Banking Financial Companies (NBFCs) in India?", options: ["SEBI", "Reserve Bank of India (RBI)", "IRDAI", "PFRDA"], ans: 1 },
+    { q: "50. A tax system where the tax rate increases progressively as the taxpayer's income increases is called a:", options: ["Regressive Tax System", "Proportional Tax System", "Progressive Tax System", "Degressive Flat System"], ans: 2 }
+];
+
+function loadQuestions() {
+    const container = document.getElementById('questionsContainer');
+    quizData.forEach((qObj, qIndex) => {
+        const div = document.createElement('div');
+        div.className = 'q-block';
+        let html = `<div class="q-title">${qObj.q}</div><div class="options">`;
+        qObj.options.forEach((opt, oIndex) => {
+            html += `<label><input type="radio" name="q${qIndex}" value="${oIndex}"> ${opt}</label>`;
+        });
+        html += `</div><div id="feedback${qIndex}"></div>`;
+        div.innerHTML = html;
+        container.appendChild(div);
+    });
+}
+
+function submitTest() {
+    const candidateName = document.getElementById('candidateName').value.trim();
+    if (!candidateName) {
+        alert("Please enter Candidate Name / Roll No before submitting.");
+        return;
+    }
+
+    let score = 0;
+    quizData.forEach((qObj, qIndex) => {
+        const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+        const feedback = document.getElementById(`feedback${qIndex}`);
+        if (selected) {
+            const val = parseInt(selected.value);
+            if (val === qObj.ans) {
+                score++;
+                feedback.innerHTML = `<span class="result-correct">✓ Correct! Option: ${qObj.options[val]}</span>`;
+            } else {
+                feedback.innerHTML = `<span class="result-wrong">✗ Incorrect. Selected: ${qObj.options[val]} | Correct Answer: ${qObj.options[qObj.ans]}</span>`;
+            }
+        } else {
+            feedback.innerHTML = `<span class="result-wrong">✗ Not Attempted | Correct Answer: ${qObj.options[qObj.ans]}</span>`;
+        }
+    });
+
+    const summary = document.getElementById('resultSummary');
+    summary.style.display = 'block';
+    document.getElementById('scoreText').innerText = `Candidate: ${candidateName} | Score: ${score} / ${quizData.length} (${((score/quizData.length)*100).toFixed(1)}%)`;
+    summary.scrollIntoView({ behavior: 'smooth' });
+
+    if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL !== "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+        const now = new Date();
+        const formData = new FormData();
+        formData.append("name", candidateName + " (Stats, Banking & Budget)");
+        formData.append("date", now.toLocaleDateString());
+        formData.append("time", now.toLocaleTimeString());
+        formData.append("score", score);
+        formData.append("total", quizData.length);
+
+        fetch(GOOGLE_SHEET_URL, { method: "POST", body: formData, mode: "no-cors" })
+        .catch(err => console.error("Error logging score:", err));
+    }
+}
+
+window.onload = loadQuestions;
+</script>
+</body>
+</html>
